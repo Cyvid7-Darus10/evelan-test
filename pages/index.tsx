@@ -3,32 +3,33 @@ import { Box, Center, SimpleGrid, Button } from '@chakra-ui/react';
 import ProfileCard from '@/components/ProfileCard';
 import { ProfileProps } from '@/types/profileType';
 
-export default function Example() {
-	const [profileData, ProfileData] = useState([] as ProfileProps[]);
-	const [isLoading, setLoading] = useState(false);
+export default function Test() {
+	const [profileData, setProfileData] = useState([] as ProfileProps[]);
+	const [isFetchingProfiles, setIsFetchingProfiles] = useState(false);
 	const [doneFetching, setDoneFetching] = useState(false);
 
-	const fecthProfiles = useCallback(
+	const fetchProfiles = useCallback(
 		async (page: number) => {
-			setLoading(true);
-			setLoading(true);
+			setIsFetchingProfiles(true);
 			fetch(`https://reqres.in/api/users?page=${page}`)
 				.then((res) => res.json())
 				.then((data) => {
-					ProfileData([...profileData, ...data.data]);
-					setLoading(false);
+					setProfileData([...profileData, ...data.data]);
+					setIsFetchingProfiles(false);
 				});
 		},
 		[profileData]
 	);
 
 	useEffect(() => {
-		if (!profileData.length) fecthProfiles(1);
-	}, [fecthProfiles, profileData]);
+		if (!profileData.length) {
+			fetchProfiles(1);
+		}
+	}, [fetchProfiles, profileData]);
 
 	const handleLoadMore = () => {
-		setLoading(true);
-		fecthProfiles(2);
+		setIsFetchingProfiles(true);
+		fetchProfiles(2);
 		setDoneFetching(true);
 	};
 
@@ -58,7 +59,7 @@ export default function Example() {
 				colorScheme="blue"
 				loadingText="Fetching"
 				onClick={handleLoadMore}
-				isLoading={isLoading}
+				isLoading={isFetchingProfiles}
 				isDisabled={doneFetching}>
 				Load more
 			</Button>
