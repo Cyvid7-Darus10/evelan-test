@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Box, Center, SimpleGrid, Button } from '@chakra-ui/react';
-import ProfileCard from '@/components/ProfileCard';
+import { Box, SimpleGrid, Button } from '@chakra-ui/react';
+import ProfileCard from '@/components/Common/ProfileCard';
 import { ProfileProps } from '@/types/profileType';
+import BasicLayout from '@/components/Layout/BasicLayout';
 
-export default function Test() {
+export default function Index() {
 	const [profileData, setProfileData] = useState([] as ProfileProps[]);
 	const [isFetchingProfiles, setIsFetchingProfiles] = useState(false);
 	const [doneFetching, setDoneFetching] = useState(false);
@@ -34,35 +35,37 @@ export default function Test() {
 	};
 
 	return (
-		<Box
-			w="100%"
-			p={4}
-			flexDirection="column"
-			alignItems="center"
-			justifyContent="center"
-			display="flex">
-			{!profileData && <Box>No profileData</Box>}
-			<SimpleGrid columns={{ sm: 2, md: 3 }} spacing="8">
-				{profileData?.map((profile: ProfileProps) => (
-					<ProfileCard
-						key={profile.id}
-						id={profile.id}
-						email={profile.email}
-						first_name={profile.first_name}
-						last_name={profile.last_name}
-						avatar={profile.avatar}
-					/>
-				))}
-			</SimpleGrid>
-			<Button
-				mt={4}
-				colorScheme="blue"
-				loadingText="Fetching"
-				onClick={handleLoadMore}
-				isLoading={isFetchingProfiles}
-				isDisabled={doneFetching}>
-				Load more
-			</Button>
-		</Box>
+		<BasicLayout>
+			<Box
+				w="100%"
+				p={4}
+				flexDirection="column"
+				alignItems="center"
+				justifyContent="center"
+				display="flex">
+				{!profileData && <Box>No profileData</Box>}
+				<SimpleGrid columns={{ sm: 2, md: 3 }} spacing="8">
+					{profileData?.map((profile: ProfileProps) => (
+						<ProfileCard
+							key={profile.id}
+							id={profile.id}
+							email={profile.email}
+							first_name={profile.first_name}
+							last_name={profile.last_name}
+							avatar={profile.avatar}
+						/>
+					))}
+				</SimpleGrid>
+				<Button
+					mt={4}
+					colorScheme="blue"
+					loadingText="Fetching"
+					onClick={handleLoadMore}
+					isLoading={isFetchingProfiles}
+					isDisabled={doneFetching}>
+					Load more
+				</Button>
+			</Box>
+		</BasicLayout>
 	);
 }
