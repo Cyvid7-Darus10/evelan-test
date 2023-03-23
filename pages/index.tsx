@@ -5,7 +5,7 @@ import { ProfileProps } from '@/types/profileType';
 import BasicLayout from '@/components/Layout/BasicLayout';
 
 export default function Index() {
-	const [profileData, setProfileData] = useState([] as ProfileProps[]);
+	const [profileData, setProfileData] = useState<ProfileProps[]>([]);
 	const [isFetchingProfiles, setIsFetchingProfiles] = useState(false);
 	const [doneFetching, setDoneFetching] = useState(false);
 
